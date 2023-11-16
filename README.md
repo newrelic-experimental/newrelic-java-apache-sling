@@ -1,61 +1,53 @@
 <a href="https://opensource.newrelic.com/oss-category/#new-relic-experimental"><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/newrelic/opensource-website/raw/main/src/images/categories/dark/Experimental.png"><source media="(prefers-color-scheme: light)" srcset="https://github.com/newrelic/opensource-website/raw/main/src/images/categories/Experimental.png"><img alt="New Relic Open Source experimental project banner." src="https://github.com/newrelic/opensource-website/raw/main/src/images/categories/Experimental.png"></picture></a>
 
+![GitHub forks](https://img.shields.io/github/forks/newrelic-experimental/newrelic-java-apache-sling?style=social)
+![GitHub stars](https://img.shields.io/github/stars/newrelic-experimental/newrelic-java-apache-sling?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/newrelic-experimental/newrelic-java-apache-sling?style=social)
 
-![GitHub forks](https://img.shields.io/github/forks/newrelic-experimental/java-instrumentation-template?style=social)
-![GitHub stars](https://img.shields.io/github/stars/newrelic-experimental/java-instrumentation-template?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/newrelic-experimental/java-instrumentation-template?style=social)
-
-![GitHub all releases](https://img.shields.io/github/downloads/newrelic-experimental/java-instrumentation-template/total)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/newrelic-experimental/java-instrumentation-template)
-![GitHub last commit](https://img.shields.io/github/last-commit/newrelic-experimental/java-instrumentation-template)
-![GitHub Release Date](https://img.shields.io/github/release-date/newrelic-experimental/java-instrumentation-template)
-
-
-![GitHub issues](https://img.shields.io/github/issues/newrelic-experimental/java-instrumentation-template)
-![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic-experimental/java-instrumentation-template)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/java-instrumentation-template)
-![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic-experimental/java-instrumentation-template)
+![GitHub all releases](https://img.shields.io/github/downloads/newrelic-experimental/newrelic-java-apache-sling/total)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/newrelic-experimental/newrelic-java-apache-sling)
+![GitHub last commit](https://img.shields.io/github/last-commit/newrelic-experimental/newrelic-java-apache-sling)
+![GitHub Release Date](https://img.shields.io/github/release-date/newrelic-experimental/newrelic-java-apache-sling)
 
 
-# [Project Name - use format "newrelic-java-<name>"] [build badges go here when available]
+![GitHub issues](https://img.shields.io/github/issues/newrelic-experimental/newrelic-java-apache-sling)
+![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic-experimental/newrelic-java-apache-sling)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/newrelic-java-apache-sling)
+![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic-experimental/newrelic-java-apache-sling)
 
->[Brief description - what is the project and value does it provide? How often should users expect to get releases? How is versioning set up? Where does this project want to go?]
+# New Relic Java Instrumentation for Apache Sling
 
-## Value
+Provides instrumentation for the Apache Sling framework.
 
-|Metrics | Events | Logs | Traces | Visualization | Automation |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|:x:|:x:|:x:|:white_check_mark:|:x:|:x:|
-
-### List of Metrics,Events,Logs,Traces
-|Name | Type | Description |
-|:-:|:-:|:-:|
-|*metric.name* | Metric| *description*|
-|*event.name* | Event|  *description*|
-|*log.name* | Log|  *description*|
-|*trace.name*| Trace| *description*
-|---|---|---|
 
 
 ## Installation
 
-> [Include a step-by-step procedure on how to get your code installed. Be sure to include any third-party dependencies that need to be installed separately]
+This use this instrumentation.   
+1. Download the latest release.    
+2. In the New Relic Java Agent directory (directory containing newrelic.jar), create a directory named extensions if it doe not already exist.   
+3. Copy the jars into the extensions directory.
+4. Add a property to newrelic.yml file indicating the list of resources extensions that must be tracked as transactions. Those extensions not specified here are bunched together as one transaction (for example, all .js files will appear under **/*.js). 
+
+ sling.naming.labs.extensions: html, json, jsp
+
+This jar instruments the org.apache.sling.engine.impl.SlingMainServlet servlet and renames transaction by first extracting the resource URL. It examines the file extension and if that extension matches one specified in the list above, it then extracts the first part of the URL (the part before the first “/” and appends the file name to that with “...” in between them) to create the transaction name.
+
+5. Restart the application.
+
 
 ## Getting Started
 
->[Simple steps to start working with the software similar to a "Hello World"]
-
-## Usage
-
->[**Optional** - Include more thorough instructions on how to use the software. This section might not be needed if the Getting Started section is enough. Remove this section if it's not needed.]
+After deployment, you should be able to see parts of your Apache Sling flows showing up in transaction traces.
 
 ## Building
 
->[**Optional** - Include this section if users will need to follow specific instructions to build the software from source. Be sure to include any third party build dependencies that need to be installed separately. Remove this section if it's not needed.]
-
-## Testing
-
->[**Optional** - Include instructions on how to run tests if we include tests with the codebase. Remove this section if it's not needed.]
+If you make changes to the instrumentation code and need to build the instrumentation jars, follow these steps
+1. Set environment variable NEW_RELIC_EXTENSIONS_DIR.  Its value should be the directory where you want to build the jars (i.e. the extensions directory of the Java Agent).   
+2. Build one or all of the jars.   
+a. To build one jar, run the command:  gradlew _moduleName_:clean  _moduleName_:install    
+b. To build all jars, run the command: gradlew clean install
+3. Restart the application
 
 ## Support
 
