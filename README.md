@@ -29,7 +29,7 @@ This use this instrumentation.
 3. Copy the jars into the extensions directory.
 4. Add a property to newrelic.yml file indicating the list of resources extensions that must be tracked as transactions. Those extensions not specified here are bunched together as one transaction (for example, all .js files will appear under **/*.js). 
 
- sling.naming.labs.extensions: html, json, jsp
+ ***sling.naming.labs.extensions: html, json, jsp***
 
 This jar instruments the org.apache.sling.engine.impl.SlingMainServlet servlet and renames transaction by first extracting the resource URL. It examines the file extension and if that extension matches one specified in the list above, it then extracts the first part of the URL (the part before the first “/” and appends the file name to that with “...” in between them) to create the transaction name.
 
@@ -68,5 +68,3 @@ If you believe you have found a security vulnerability in this project or any of
 ## License
 
 New Relic Java Instrumentation for Apache Sling is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
-
->[If applicable: [Project Name] also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the third-party notices document.]
