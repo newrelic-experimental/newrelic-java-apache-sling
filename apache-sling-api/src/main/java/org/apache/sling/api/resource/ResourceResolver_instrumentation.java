@@ -33,8 +33,8 @@ public abstract class ResourceResolver_instrumentation {
 			if(transaction != null) {
 				NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom","Sling","resolve",res.getName()});
 
-				transaction.setTransactionName(TransactionNamePriority.FRAMEWORK_LOW, true, "Sling",
-						new String[] { "Sling", "ResourceResolver", "resolve"});
+				//transaction.setTransactionName(TransactionNamePriority.FRAMEWORK_LOW, true, "Sling",
+				///		new String[] { "Sling", "ResourceResolver", "resolve"});
 
 				Logger nrLogger = NewRelic.getAgent().getLogger();
 				nrLogger.log(Level.FINER, "APACHE-SLING - Starting ResourceResolver resolve method");
@@ -59,8 +59,8 @@ public abstract class ResourceResolver_instrumentation {
 			if(transaction != null) {
 				NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom","Sling","resolve",res.getName()});
 
-				transaction.setTransactionName(TransactionNamePriority.FRAMEWORK_LOW, true, "Sling",
-						new String[] { "Sling", "ResourceResolver", "resolve"});
+				//transaction.setTransactionName(TransactionNamePriority.FRAMEWORK_LOW, true, "Sling",
+				//		new String[] { "Sling", "ResourceResolver", "resolve"});
 
 				Logger nrLogger = NewRelic.getAgent().getLogger();
 				nrLogger.log(Level.FINER, "APACHE-SLING - Starting ResourceResolver resolve method");
