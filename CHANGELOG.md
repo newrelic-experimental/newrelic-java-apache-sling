@@ -1,6 +1,6 @@
 ## Version: [v1.0.0](https://github.com/newrelic-experimental/newrelic-java-apache-sling/releases/tag/v1.0.0) | Created: 2023-11-28
 ### Features
-- Eat:first version of apache sling instrumentation
+- First version of apache sling instrumentation
 
 ## Installation
 
