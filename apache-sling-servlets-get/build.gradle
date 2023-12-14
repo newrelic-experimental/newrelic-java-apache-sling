@@ -1,22 +1,14 @@
 
-// Build.gradle generated for instrumentation module apache-sling
+// Build.gradle generated for instrumentation module apache-sling-servlets-get
 
 apply plugin: 'java'
 
 dependencies {
-   // Declare a dependency on each JAR you want to instrument
-   // Example:
-   // implementation 'javax.servlet:servlet-api:2.5'
+   implementation  'org.apache.sling:org.apache.sling.servlets.get:2.1.44'
+   implementation  'org.apache.sling:org.apache.sling.api:2.27.2'
+   implementation  'javax.servlet:javax.servlet-api:3.1.0'
 
    // New Relic Java Agent dependencies
- 
-   implementation  'org.apache.sling:org.apache.sling.api:2.27.2'
-   implementation  'org.apache.sling:org.apache.sling.engine:2.15.6'
-   implementation  'javax.servlet:javax.servlet-api:3.1.0'
-  
-  
-   
-   
    implementation 'com.newrelic.agent.java:newrelic-agent:6.4.0'
    implementation 'com.newrelic.agent.java:newrelic-api:6.4.0'
    implementation fileTree(include: ['*.jar'], dir: '../libs')
@@ -25,21 +17,18 @@ dependencies {
 
 jar {
   manifest {
-    attributes 'Implementation-Title': 'com.newrelic.instrumentation.labs.apache-sling'
+    attributes 'Implementation-Title': 'com.newrelic.instrumentation.labs.apache-sling-servlets-get'
     attributes 'Implementation-Vendor': 'New Relic Labs'
     attributes 'Implementation-Vendor-Id': 'com.newrelic.labs'
-    attributes 'Implementation-Version': 1.1
+    attributes 'Implementation-Version': 1.0
   }
 }
 
 verifyInstrumentation {
-    passes("org.apache.sling:org.apache.sling.engine:[2.15.6,)") {
-        compile 'org.apache.sling:org.apache.sling.api:2.27.2'
+    passes("org.apache.sling:org.apache.sling.servlets.get:[2.1.44,)") {
         compile 'javax.servlet:javax.servlet-api:3.1.0'
-
-    }
+        compile 'org.apache.sling:org.apache.sling.api:2.27.2'
+ }
     
   
 }
-
- 

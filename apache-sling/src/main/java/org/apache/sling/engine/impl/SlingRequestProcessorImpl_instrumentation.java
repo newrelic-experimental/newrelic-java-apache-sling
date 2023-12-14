@@ -24,17 +24,10 @@ import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.NewField;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
+import com.newrelic.instrumentation.labs.apache.sling.Util;
 
 @Weave(originalName = "org.apache.sling.engine.impl.SlingRequestProcessorImpl", type = MatchType.BaseClass)
 public abstract class SlingRequestProcessorImpl_instrumentation {
-
-   @NewField
-	private Map<String, Object> attributes = null;
-
-    private void addAttribute(String key, Object value) {
-        if (attributes == null) attributes = new HashMap<>();
-        attributes.put(key, value);
-    }
 
     @Trace
     public void doProcessRequest( HttpServletRequest servletRequest,
@@ -52,14 +45,16 @@ public abstract class SlingRequestProcessorImpl_instrumentation {
                                  DispatchingInfo dispatchingInfo)
             throws IOException, ServletException {
         NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "dispatchRequest"});
-
-        addAttribute("resolvedURL.Extension", resolvedURL.getExtension());
-        addAttribute("resolvedURL.ResourcePath", resolvedURL.getResourcePath());
-        addAttribute("resolvedURL.SelectorString", resolvedURL.getSelectorString());
-        addAttribute("dispatchingInfo.ContextPath", dispatchingInfo.getContextPath());
-        addAttribute("dispatchingInfo.PathInfo", dispatchingInfo.getPathInfo());
-        addAttribute("dispatchingInfo.RequestURI", dispatchingInfo.getRequestUri());
-        addAttribute("dispatchingInfo.QueryString", dispatchingInfo.getQueryString());
+      
+        Map<String, Object> attributes = new HashMap<>();
+        Util.recordValue(attributes,"resolvedURL.Extension", resolvedURL.getExtension());
+        Util.recordValue(attributes,"resolvedURL.ResourcePath", resolvedURL.getResourcePath());
+        Util.recordValue(attributes,"resolvedURL.SelectorString", resolvedURL.getSelectorString());
+        Util.recordValue(attributes,"dispatchingInfo.ContextPath", dispatchingInfo.getContextPath());
+        Util.recordValue(attributes,"dispatchingInfo.PathInfo", dispatchingInfo.getPathInfo());
+        Util.recordValue(attributes,"dispatchingInfo.RequestURI", dispatchingInfo.getRequestUri());
+        Util.recordValue(attributes,"dispatchingInfo.QueryString", dispatchingInfo.getQueryString());
+       
         if (attributes != null) NewRelic.getAgent().getTracedMethod().addCustomAttributes(attributes);
 
         Weaver.callOriginal();
