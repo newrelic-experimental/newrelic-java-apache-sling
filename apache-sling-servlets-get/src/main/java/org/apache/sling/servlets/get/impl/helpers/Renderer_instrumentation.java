@@ -27,10 +27,10 @@ public abstract class Renderer_instrumentation {
 			  Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating request", e);
+			handleException("error evaluating render", e);
 		}
 
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "render"});
+		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "Renderer", getClass().getSimpleName(), "render"});
 		Weaver.callOriginal();
 	}
 

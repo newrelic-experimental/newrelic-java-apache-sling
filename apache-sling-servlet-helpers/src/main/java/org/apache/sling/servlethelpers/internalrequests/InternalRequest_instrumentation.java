@@ -25,7 +25,7 @@ public abstract class InternalRequest_instrumentation {
 
     @Trace(dispatcher = true)
     public InternalRequest execute() throws IOException {
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "execute"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "InternalRequest", getClass().getSimpleName(), "execute"});
         return Weaver.callOriginal();
     }
 
@@ -38,10 +38,10 @@ public abstract class InternalRequest_instrumentation {
                Util.recordRequestAttributes(request);
             }
         } catch (Exception e) {
-            handleException("error evaluating request", e);
+            handleException("error evaluating delegateExecute", e);
         }
 
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "delegateExecute"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "InternalRequest",getClass().getSimpleName(), "delegateExecute"});
         Weaver.callOriginal();
     }
 

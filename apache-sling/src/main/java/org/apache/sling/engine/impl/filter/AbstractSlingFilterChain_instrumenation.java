@@ -19,7 +19,7 @@ public abstract class AbstractSlingFilterChain_instrumenation {
             throws ServletException, IOException {
 
       
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "doFilter"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "AbstractSlingFilterChain", getClass().getSimpleName(), "doFilter"});
 
         Weaver.callOriginal();
         return;

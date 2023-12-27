@@ -17,7 +17,7 @@ public abstract class ResourceResolver_instrumentation {
         Resource res = Weaver.callOriginal();
 
         if (req instanceof HttpServletRequest) {
-            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", getClass().getSimpleName(), "resolve", res.getName()});
+            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling","ResourceResolver", getClass().getSimpleName(), "resolve", res.getName()});
         }
         return res;
     }
@@ -27,7 +27,7 @@ public abstract class ResourceResolver_instrumentation {
         Resource res = Weaver.callOriginal();
 
         if (req instanceof HttpServletRequest) {
-            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", getClass().getSimpleName(), "resolve", res.getName()});
+            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "ResourceResolver", getClass().getSimpleName(), "resolve", res.getName()});
         }
         return res;
     }

@@ -49,7 +49,7 @@ public abstract class SlingMainServlet_Instrumentation {
     @Trace(dispatcher = true)
     public void service(ServletRequest request, ServletResponse response)
             throws javax.servlet.ServletException {
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "service"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingMainServlet", getClass().getSimpleName(), "service"});
 
         if (customTxnNamingExtensions != null) {
             try {

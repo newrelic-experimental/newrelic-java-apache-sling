@@ -24,10 +24,10 @@ public abstract class SlingPostProcessor_instrumentation {
 				Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating request", e);
+			handleException("error evaluating process", e);
 		}
 
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "process"});
+		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingPostProcessor", getClass().getSimpleName(), "process"});
 		Weaver.callOriginal();
 	}
 

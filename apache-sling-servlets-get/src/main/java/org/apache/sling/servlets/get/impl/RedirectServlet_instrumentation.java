@@ -28,10 +28,10 @@ public abstract class RedirectServlet_instrumentation {
 				 Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating request", e);
+			handleException("error evaluating doGet", e);
 		}
 
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "doGet"});
+		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling","RedirectServlet",getClass().getSimpleName(), "doGet"});
 		Weaver.callOriginal();
 	}
 

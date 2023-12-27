@@ -26,10 +26,10 @@ public abstract class PostOperation_instrumentation {
 			Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating request", e);
+			handleException("error evaluating run", e);
 		}
 
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "run"});
+		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "PostOperation", getClass().getSimpleName(), "run"});
 		Weaver.callOriginal();
 	}
 

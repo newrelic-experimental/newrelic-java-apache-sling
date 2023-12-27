@@ -25,10 +25,10 @@ public abstract class SlingPostServlet_Instrumentation  {
 				Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating request", e);
+			handleException("error evaluating doPost", e);
 		}
 
-		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "doPost"});
+		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingPostServlet", getClass().getSimpleName(), "doPost"});
 		Weaver.callOriginal();
 	}
 

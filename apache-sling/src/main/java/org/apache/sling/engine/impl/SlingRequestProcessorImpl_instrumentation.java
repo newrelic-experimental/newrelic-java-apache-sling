@@ -33,7 +33,7 @@ public abstract class SlingRequestProcessorImpl_instrumentation {
     public void doProcessRequest( HttpServletRequest servletRequest,
                                    HttpServletResponse servletResponse,
                                    ResourceResolver resourceResolver) throws IOException {
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "doProcessRequest"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling","SlingRequestProcessorImpl", getClass().getSimpleName(), "doProcessRequest"});
         Weaver.callOriginal();
         return;
     }
@@ -44,7 +44,7 @@ public abstract class SlingRequestProcessorImpl_instrumentation {
                                  RequestPathInfo resolvedURL,
                                  DispatchingInfo dispatchingInfo)
             throws IOException, ServletException {
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "dispatchRequest"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingRequestProcessorImpl", getClass().getSimpleName(), "dispatchRequest"});
       
         Map<String, Object> attributes = new HashMap<>();
         Util.recordValue(attributes,"resolvedURL.Extension", resolvedURL.getExtension());
@@ -66,7 +66,7 @@ public abstract class SlingRequestProcessorImpl_instrumentation {
                                  SlingHttpServletResponse response,
                                  FilterChainType filterChainType) throws IOException,
             ServletException {
-        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", getClass().getSimpleName(), "processComponent"});
+        NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingRequestProcessorImpl", getClass().getSimpleName(), "processComponent"});
         Weaver.callOriginal();
         return;
     }
