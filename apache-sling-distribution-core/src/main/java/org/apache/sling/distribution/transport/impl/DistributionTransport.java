@@ -15,7 +15,7 @@ import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.distrubution.trigger.Util;
 
-@Weave(originalName = "org.apache.sling.distribution.transport.impl.DistributionTransport", type = MatchType.Interface)
+@Weave(type = MatchType.Interface)
 public abstract class DistributionTransport {
 
 	@Trace(dispatcher = true)
