@@ -2,15 +2,12 @@
 package org.apache.sling.distribution.trigger.impl;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import javax.jcr.RepositoryException;
 import javax.jcr.observation.Event;
 
-import java.util.Map;
-import java.util.logging.Level;
-
-import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.distribution.DistributionRequest;
-import org.apache.sling.distribution.DistributionResponse;
 
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
@@ -20,13 +17,14 @@ import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.distrubution.trigger.Util;
 
 
-@Weave(originalName = "org.apache.sling.distribution.trigger.impl.AbstractJcrEventTrigger", type = MatchType.BaseClass)
-public abstract class AbstractJcrEventTrigger_instrumentation {
+@Weave(type = MatchType.BaseClass)
+public abstract class AbstractJcrEventTrigger {
 
 	@Trace(dispatcher = true)
-	 protected DistributionRequest processEvent(Event event) throws RepositoryException {
+	protected DistributionRequest processEvent(Event event) throws RepositoryException {
 
 		Map<String, Object> attrs = new HashMap<>();
+		DistributionRequest result =null;
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "AbstractJcrEventTrigger", getClass().getSimpleName(), "processEvent"});
 		try {
@@ -35,25 +33,30 @@ public abstract class AbstractJcrEventTrigger_instrumentation {
 			if (event != null) {
 				Util.recordValue(attrs, "event.path", event.getPath());
 				Util.recordValue(attrs, "event.type", event.getType());
-			
+
 			}
 
 		}
 		catch (Exception e) {
-			handleException("error evaluating processEvent", e);
+			Util.handleException(getClass().getSimpleName(),"error evaluating processEvent", e);
 
 		}
 		if (attrs != null) {
-            NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
-        }
-		
-		return Weaver.callOriginal();
+			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
+		}
+
+		try {
+			result = Weaver.callOriginal();
+		} catch (Exception e) {
+			if(RepositoryException.class.isInstance(e)) {
+				NewRelic.noticeError(e);
+				throw (RepositoryException)e;
+			}
+		}
+		return result;
 
 
 
 	}
-	private void handleException(String message, Throwable e) {
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Custom AbstractJcrEventTrigger Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom AbstractJcrEventTrigger Instrumentation - " + message + ": " + e.getMessage());
-	}
+
 }

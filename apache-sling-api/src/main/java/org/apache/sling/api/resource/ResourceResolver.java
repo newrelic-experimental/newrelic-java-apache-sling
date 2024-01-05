@@ -9,8 +9,8 @@ import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 
-@Weave(originalName = "org.apache.sling.api.resource.ResourceResolver", type = MatchType.Interface)
-public abstract class ResourceResolver_instrumentation {
+@Weave(type = MatchType.Interface)
+public abstract class ResourceResolver {
 
     @Trace
     public Resource resolve(HttpServletRequest req) {

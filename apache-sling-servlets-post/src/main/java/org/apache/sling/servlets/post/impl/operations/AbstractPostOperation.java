@@ -2,7 +2,6 @@ package org.apache.sling.servlets.post.impl.operations;
 
 
 import java.util.List;
-import java.util.logging.Level;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.PersistenceException;
@@ -16,31 +15,32 @@ import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.apache.sling.servlets.post.Util;
 
-@Weave(originalName = "org.apache.sling.servlets.post.impl.operations.AbstractPostOperation", type = MatchType.BaseClass)
-public abstract class AbstractPostOperation_instrumentation {
+@Weave(type = MatchType.BaseClass)
+public abstract class AbstractPostOperation {
 
 	@Trace(dispatcher = true)
 	protected  void doRun(SlingHttpServletRequest request,
-            PostResponse response,
-            List<Modification> changes) throws PersistenceException {
+			PostResponse response,
+			List<Modification> changes) throws PersistenceException {
 
 		try {
 			if (request != null) {
 				Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating doRun", e);
+			Util.handleException(getClass().getSimpleName(), "error evaluating doRun", e);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "bstractPostOperation", getClass().getSimpleName(), "doRun"});
-		Weaver.callOriginal();
+		try {
+			Weaver.callOriginal();
+		} catch (Exception e) {
+			if(PersistenceException.class.isInstance(e)) {
+				NewRelic.noticeError(e);
+				throw (PersistenceException)e;
+			}
+		}
 	}
 
-
-
-	private void handleException(String message, Throwable e) {
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Custom AbstractPostOperation Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom AbstractPostOperation Instrumentation - " + message + ": " + e.getMessage());
-	}
 }
 

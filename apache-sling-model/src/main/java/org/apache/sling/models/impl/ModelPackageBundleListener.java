@@ -2,7 +2,6 @@ package org.apache.sling.models.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
@@ -16,13 +15,14 @@ import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.apache.sling.models.impl.Util;
 
 
-@Weave(originalName = "org.apache.sling.models.impl.ModelPackageBundleListener", type = MatchType.BaseClass)
-public abstract class ModelPackageBundleListener_instrumentation {
+@Weave(type = MatchType.BaseClass)
+public abstract class ModelPackageBundleListener {
 
 	@SuppressWarnings("rawtypes")
 	@Trace(dispatcher = true)
 	public ServiceRegistration[] addingBundle(Bundle bundle, BundleEvent event) {
 		Map<String, Object> attrs = new HashMap<>();
+
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "ModelPackageBundleListener", getClass().getSimpleName(), "addingBundle"});
 
@@ -44,7 +44,7 @@ public abstract class ModelPackageBundleListener_instrumentation {
 
 		}
 		catch (Exception e) {
-			handleException("error evaluating addingBundle", e);
+			Util.handleException(getClass().getSimpleName(),"error evaluating addingBundle", e);
 
 		}
 		return Weaver.callOriginal();
@@ -73,17 +73,14 @@ public abstract class ModelPackageBundleListener_instrumentation {
 			if ( attrs != null ) {
 				NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
 			}
-			
+
 
 		}
 		catch (Exception e) {
-			handleException("error evaluating removedBundle", e);
+			Util.handleException(getClass().getSimpleName(),"error evaluating removedBundle", e);
 
 		}
 		Weaver.callOriginal();
 	}
-	private void handleException(String message, Throwable e) {
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Custom ModelPackageBundleListener Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom ModelPackageBundleListener Instrumentation - " + message + ": " + e.getMessage());
-	}
+
 }

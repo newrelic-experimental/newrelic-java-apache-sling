@@ -1,9 +1,6 @@
 package org.apache.sling.servlets.get.impl;
 
 import java.io.IOException;
-import java.util.logging.Level;
-
-import javax.servlet.ServletException;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -15,8 +12,8 @@ import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.apache.sling.servlets.get.Util;
 
-@Weave(originalName = "org.apache.sling.servlets.get.impl.SlingInfoServlet", type = MatchType.BaseClass)
-public abstract class SlingInfoServlet_instrumentation {
+@Weave(type = MatchType.BaseClass)
+public abstract class SlingInfoServlet {
 
 	@Trace(dispatcher = true)
 	protected void doGet(SlingHttpServletRequest request,
@@ -24,20 +21,24 @@ public abstract class SlingInfoServlet_instrumentation {
 
 		try {
 			if (request != null) {
-				 Util.recordRequestAttributes(request);
+				Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating doGet", e);
+			Util.handleException(getClass().getSimpleName(),"error evaluating doGet", e);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingInfoServlet",getClass().getSimpleName(), "doGet"});
-		Weaver.callOriginal();
+		try {
+			Weaver.callOriginal();
+		} catch (Exception e) {
+			if(IOException.class.isInstance(e)) {
+				NewRelic.noticeError(e);
+				throw (IOException)e;
+			}
+		}
 	}
 
 
 
-	private void handleException(String message, Throwable e) {
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Custom SlingInfoServlet Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom SlingInfoServlet Instrumentation - " + message + ": " + e.getMessage());
-	}
+
 }

@@ -1,6 +1,9 @@
 package com.newrelic.instrumentation.labs.apache.sling.models.impl;
 
 import java.util.Map;
+import java.util.logging.Level;
+
+import com.newrelic.api.agent.NewRelic;
 
 public class Util {
 
@@ -10,5 +13,10 @@ public class Util {
 			attributes.put(key, value);
 		}
 	}
+	public static  void handleException(String className, String message, Throwable e) {
+		//NewRelic.getAgent().getLogger().log(Level.INFO, "Custom" + className  +" Instrumentation - " + message);
+		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom" + className +" Instrumentation - " + message + ": " + e.getMessage());
+	}
+
 
 }

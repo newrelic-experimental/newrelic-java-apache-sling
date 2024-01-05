@@ -17,13 +17,13 @@ import com.newrelic.api.agent.weaver.NewField;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 
-@Weave(originalName = "org.apache.sling.engine.impl.SlingMainServlet", type = MatchType.BaseClass)
-public abstract class SlingMainServlet_Instrumentation {
+@Weave(type = MatchType.BaseClass)
+public abstract class SlingMainServlet {
 
     @NewField
     private static List<String> customTxnNamingExtensions = null;
 
-    public SlingMainServlet_Instrumentation() {
+    public SlingMainServlet() {
         Logger nrLogger = NewRelic.getAgent().getLogger();
         customTxnNamingExtensions = new ArrayList<String>();
         Object extensionsParamObject = NewRelic.getAgent().getConfig().getValue("sling.naming.labs.extensions");

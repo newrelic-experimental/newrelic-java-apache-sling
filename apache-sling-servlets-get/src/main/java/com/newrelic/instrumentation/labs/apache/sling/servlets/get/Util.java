@@ -2,6 +2,7 @@ package com.newrelic.instrumentation.labs.apache.sling.servlets.get;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.request.RequestParameter;
@@ -13,34 +14,34 @@ public class Util {
 
 
 	public static void  recordRequestAttributes(SlingHttpServletRequest request) {
-	        Map<String, Object> attrs = new HashMap<>();
-	        recordRequestParams(attrs, request);
+		Map<String, Object> attrs = new HashMap<>();
+		recordRequestParams(attrs, request);
 
-	        recordValue(attrs, "request.path", request.getPathInfo());
-	        recordValue(attrs, "request.requestMethod", request.getMethod());
-	        recordValue(attrs, "request.contentType", request.getContentType());
-	        recordValue(attrs, "request.queryString", request.getQueryString());
+		recordValue(attrs, "request.path", request.getPathInfo());
+		recordValue(attrs, "request.requestMethod", request.getMethod());
+		recordValue(attrs, "request.contentType", request.getContentType());
+		recordValue(attrs, "request.queryString", request.getQueryString());
 
-	        if (attrs != null) {
-	            NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
-	        }
-	    }
+		if (attrs != null) {
+			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
+		}
+	}
 
-	 
+
 	public static void recordRequestParams(Map<String, Object> attributes, SlingHttpServletRequest request) {
 		if(request != null) {
 
 
-			 RequestParameterMap RPM = request.getRequestParameterMap();
+			RequestParameterMap RPM = request.getRequestParameterMap();
 
-             for (String key : RPM.keySet()) {
-                 // Get the first value for the named parameter
-                 RequestParameter[] values = RPM.getValues(key);
-                 Object firstValue = (values != null && values.length > 0) ? values[0] : null;
+			for (String key : RPM.keySet()) {
+				// Get the first value for the named parameter
+				RequestParameter[] values = RPM.getValues(key);
+				Object firstValue = (values != null && values.length > 0) ? values[0] : null;
 
-                 // Add the first value to the new map
-                 attributes.put("RequestParam-"+key, firstValue);
-             }
+				// Add the first value to the new map
+				attributes.put("RequestParam-"+key, firstValue);
+			}
 
 		}
 	}
@@ -51,4 +52,9 @@ public class Util {
 		}
 	}
 
+	public static  void handleException(String className, String message, Throwable e) {
+		//NewRelic.getAgent().getLogger().log(Level.INFO, "Custom" + className  +" Instrumentation - " + message);
+		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom" + className +" Instrumentation - " + message + ": " + e.getMessage());
+	}
 }
+

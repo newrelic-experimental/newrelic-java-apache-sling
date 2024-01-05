@@ -3,7 +3,6 @@ package org.apache.sling.distribution.packaging.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.apache.sling.distribution.packaging.DistributionPackage;
 
@@ -35,7 +34,7 @@ public abstract class DistributionPackageProcessor_instrumentation {
 
 
 		} catch (Exception e) {
-			handleException("error evaluting process", e);
+			Util.handleException(getClass().getSimpleName(),"error evaluting process", e);
 		}
 
 		if (attrs != null) {
@@ -46,8 +45,4 @@ public abstract class DistributionPackageProcessor_instrumentation {
 	}
 
 
-	private void handleException(String message, Throwable e) {
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Custom DistributionPackageProcessor Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom DistributionPackageProcessor Instrumentation - " + message + ": " + e.getMessage());
-	}
 }

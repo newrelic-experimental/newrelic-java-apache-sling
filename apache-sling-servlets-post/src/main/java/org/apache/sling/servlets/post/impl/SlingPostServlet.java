@@ -1,7 +1,6 @@
 package org.apache.sling.servlets.post.impl;
 
 import java.io.IOException;
-import java.util.logging.Level;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -13,29 +12,29 @@ import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.apache.sling.servlets.post.Util;
 
-@Weave(originalName = "org.apache.sling.servlets.post.impl.SlingPostServlet", type = MatchType.BaseClass)
-public abstract class SlingPostServlet_Instrumentation  {
+@Weave(type = MatchType.BaseClass)
+public abstract class SlingPostServlet  {
 
 	@Trace(dispatcher = true)
 	protected void doPost(SlingHttpServletRequest request,
-            SlingHttpServletResponse response) throws IOException {
+			SlingHttpServletResponse response) throws IOException {
 
 		try {
 			if (request != null) {
 				Util.recordRequestAttributes(request);
 			}
 		} catch (Exception e) {
-			handleException("error evaluating doPost", e);
+			Util.handleException(getClass().getSimpleName(),"error evaluating doPost", e);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingPostServlet", getClass().getSimpleName(), "doPost"});
-		Weaver.callOriginal();
-	}
-
-
-
-	private void handleException(String message, Throwable e) {
-		NewRelic.getAgent().getLogger().log(Level.INFO, "Custom SlingPostServlet Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom SlingPostServlet Instrumentation - " + message + ": " + e.getMessage());
+		try {
+			Weaver.callOriginal();
+		} catch (Exception e) {
+			if(IOException.class.isInstance(e)) {
+				NewRelic.noticeError(e);
+				throw (IOException)e;
+			}
+		}
 	}
 }
