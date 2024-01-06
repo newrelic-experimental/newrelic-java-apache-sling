@@ -9,15 +9,15 @@ import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 
-@Weave(originalName = "org.apache.sling.api.resource.ResourceResolver", type = MatchType.Interface)
-public abstract class ResourceResolver_instrumentation {
+@Weave(type = MatchType.Interface)
+public abstract class ResourceResolver {
 
     @Trace
     public Resource resolve(HttpServletRequest req) {
         Resource res = Weaver.callOriginal();
 
         if (req instanceof HttpServletRequest) {
-            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", getClass().getSimpleName(), "resolve", res.getName()});
+            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling","ResourceResolver", getClass().getSimpleName(), "resolve", res.getName()});
         }
         return res;
     }
@@ -27,7 +27,7 @@ public abstract class ResourceResolver_instrumentation {
         Resource res = Weaver.callOriginal();
 
         if (req instanceof HttpServletRequest) {
-            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", getClass().getSimpleName(), "resolve", res.getName()});
+            NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "ResourceResolver", getClass().getSimpleName(), "resolve", res.getName()});
         }
         return res;
     }

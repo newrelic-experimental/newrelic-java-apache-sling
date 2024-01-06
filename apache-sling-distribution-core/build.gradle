@@ -1,0 +1,33 @@
+
+// Build.gradle generated for instrumentation module apache.sling-distribution-core
+
+apply plugin: 'java'
+
+dependencies {
+    implementation 'org.apache.sling:org.apache.sling.distribution.core:0.4.8'
+    implementation 'javax.jcr:jcr:1.0'
+   // Example:
+   // implementation 'javax.servlet:servlet-api:2.5'
+
+   // New Relic Java Agent dependencies
+   implementation 'com.newrelic.agent.java:newrelic-agent:6.4.0'
+   implementation 'com.newrelic.agent.java:newrelic-api:6.4.0'
+   implementation fileTree(include: ['*.jar'], dir: '../libs')
+   implementation fileTree(include: ['*.jar'], dir: '../test-lib')
+}
+
+jar {
+  manifest {
+    attributes 'Implementation-Title': 'com.newrelic.instrumentation.labs.apache.sling-distribution-core'
+    attributes 'Implementation-Vendor': 'New Relic Labs'
+    attributes 'Implementation-Vendor-Id': 'com.newrelic.labs'
+    attributes 'Implementation-Version': 1.0
+  }
+}
+
+verifyInstrumentation { 
+   passes ("org.apache.sling:org.apache.sling.distribution.core:[0.4.8,)"){
+   compile 'javax.jcr:jcr:1.0'
+   }
+ 
+}
