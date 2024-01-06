@@ -1,3 +1,12 @@
+## Version: [v1.1.0](https://github.com/newrelic-experimental/newrelic-java-apache-sling/releases/tag/v1.1.0) | Created: 2024-01-06
+### Features
+- Added sling's get post helpers instrumentation
+
+### Bug Fixes
+- Code cleanup and optimization
+- Modied transport and helpers classes
+- Code cleanup exceptions
+
 ## Version: [v1.0.0](https://github.com/newrelic-experimental/newrelic-java-apache-sling/releases/tag/v1.0.0) | Created: 2023-11-28
 ### Features
 - First version of apache sling instrumentation
