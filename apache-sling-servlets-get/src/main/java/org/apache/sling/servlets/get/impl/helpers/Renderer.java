@@ -19,13 +19,10 @@ public abstract class Renderer {
 	public void render(SlingHttpServletRequest request,
 			SlingHttpServletResponse response) throws IOException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating render", e);
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
+
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "Renderer", getClass().getSimpleName(), "render"});
 		try {

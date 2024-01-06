@@ -27,19 +27,16 @@ public abstract class DistributionAgent {
 		DistributionResponse result =null;
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionAgent", getClass().getSimpleName(), "forward"});
-		try {
-			if (distributionRequest != null ) {
-				// Modify this section based on the methods and properties of DistributionRequest
 
-				Util.recordValue(attrs, "request", distributionRequest);
+		if (distributionRequest != null ) {
+			// Modify this section based on the methods and properties of DistributionRequest
 
-			}
-			Util.recordResourceResolver(attrs, resourceResolver);
+			Util.recordValue(attrs, "request", distributionRequest);
 
-
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(), "error evaluating execute", e);
 		}
+		Util.recordResourceResolver(attrs, resourceResolver);
+
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);

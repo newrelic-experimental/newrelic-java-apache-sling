@@ -3,7 +3,6 @@ package org.apache.sling.provisioning.model;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Trace;
 import com.newrelic.api.agent.weaver.MatchType;
@@ -23,23 +22,17 @@ abstract class ModelProcessor {
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "ModelProcessor", getClass().getSimpleName(), "process"});
 
-		try {
-			if (model != null ) {
-				Util.recordValue(attrs, "model.name", model);
-				Util.recordValue(attrs, "model.location", model.getLocation());
-				Util.recordModelFeature(attrs, model);
-
-			}
-
-			if ( attrs != null ) {
-				NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
-			}
+		if (model != null ) {
+			Util.recordValue(attrs, "model.name", model);
+			Util.recordValue(attrs, "model.location", model.getLocation());
+			Util.recordModelFeature(attrs, model);
 
 		}
-		catch (Exception e) {
-			Util.handleException( getClass().getSimpleName(),"error evaluating process", e);
 
+		if ( attrs != null ) {
+			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
 		}
+
 		return Weaver.callOriginal();
 	}
 

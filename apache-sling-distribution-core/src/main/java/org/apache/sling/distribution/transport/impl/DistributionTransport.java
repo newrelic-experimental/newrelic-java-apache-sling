@@ -25,19 +25,17 @@ public abstract class DistributionTransport {
 		Map<String, Object> attrs = new HashMap<>();
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionTransport", getClass().getSimpleName(), "forward"});
-		try {
-			if (distributionPackage != null) {
-				// Modify this section based on the methods and properties of DistributionRequest
-				Util.recordValue(attrs, "package.name", distributionPackage);
-				Util.recordValue(attrs, "package.type", distributionPackage.getType());
-				Util.recordValue(attrs, "package.size", distributionPackage.getSize());
-			}
 
-			Util.recordResourceResolver(attrs, resourceResolver);
-
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating deliverPackage", e);
+		if (distributionPackage != null) {
+			// Modify this section based on the methods and properties of DistributionRequest
+			Util.recordValue(attrs, "package.name", distributionPackage);
+			Util.recordValue(attrs, "package.type", distributionPackage.getType());
+			Util.recordValue(attrs, "package.size", distributionPackage.getSize());
 		}
+
+		Util.recordResourceResolver(attrs, resourceResolver);
+
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
@@ -62,13 +60,10 @@ public abstract class DistributionTransport {
 		RemoteDistributionPackage result = null;
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionTransport", getClass().getSimpleName(), "forward"});
-		try {
-			Util.recordValue(attrs, "request", request); // toString.
-			Util.recordResourceResolver(attrs, resourceResolver);
 
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating retrievePackage", e);
-		}
+		Util.recordValue(attrs, "request", request); // toString.
+		Util.recordResourceResolver(attrs, resourceResolver);
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);

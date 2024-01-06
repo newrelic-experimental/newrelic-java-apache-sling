@@ -98,8 +98,8 @@ public abstract class SlingMainServlet {
                     NewRelic.addCustomParameter("request_url", requestURL);
                 }
             } catch (Throwable e) {
-                NewRelic.getAgent().getLogger().log(Level.INFO, "Custom SlingMainServlet Instrumentation - error evaluating txn naming ");
-                NewRelic.getAgent().getLogger().log(Level.FINER, "Custom SlingMainServlet Instrumentation - error evaluating txn naming " + e.getMessage());
+               // NewRelic.getAgent().getLogger().log(Level.INFO, "Custom SlingMainServlet Instrumentation - error evaluating txn naming ");
+                NewRelic.getAgent().getLogger().log(Level.FINEST, "Custom SlingMainServlet Instrumentation - error evaluating txn naming " + e.getMessage());
             }
         }
         Weaver.callOriginal();

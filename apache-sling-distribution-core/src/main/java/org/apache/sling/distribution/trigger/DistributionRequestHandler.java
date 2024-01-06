@@ -23,21 +23,15 @@ public abstract class DistributionRequestHandler {
 		Map<String, Object> attrs = new HashMap<>();
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionRequestHandler", getClass().getSimpleName(), "handle"});
-		try {
 
-
-			if (request != null) {
-				Util.recordValue(attrs, "request.type", request.getRequestType().name());
-
-			}
-
-			Util.recordResourceResolver(attrs, resourceResolver);
+		if (request != null) {
+			Util.recordValue(attrs, "request.type", request.getRequestType().name());
 
 		}
-		catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating handle", e);
 
-		}
+		Util.recordResourceResolver(attrs, resourceResolver);
+
+
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
 		}

@@ -2,7 +2,6 @@ package com.newrelic.instrumentation.labs.apache.sling.servlets.get;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.request.RequestParameter;
@@ -52,9 +51,6 @@ public class Util {
 		}
 	}
 
-	public static  void handleException(String className, String message, Throwable e) {
-		//NewRelic.getAgent().getLogger().log(Level.INFO, "Custom" + className  +" Instrumentation - " + message);
-		NewRelic.getAgent().getLogger().log(Level.FINER, "Custom" + className +" Instrumentation - " + message + ": " + e.getMessage());
-	}
+
 }
 

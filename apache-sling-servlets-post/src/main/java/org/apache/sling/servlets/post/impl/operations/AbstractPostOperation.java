@@ -23,12 +23,8 @@ public abstract class AbstractPostOperation {
 			PostResponse response,
 			List<Modification> changes) throws PersistenceException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(), "error evaluating doRun", e);
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "bstractPostOperation", getClass().getSimpleName(), "doRun"});

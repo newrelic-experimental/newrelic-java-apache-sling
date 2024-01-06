@@ -19,12 +19,8 @@ public abstract class SlingPostServlet  {
 	protected void doPost(SlingHttpServletRequest request,
 			SlingHttpServletResponse response) throws IOException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating doPost", e);
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingPostServlet", getClass().getSimpleName(), "doPost"});

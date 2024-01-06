@@ -22,13 +22,10 @@ public abstract class RedirectServlet {
 			SlingHttpServletResponse response) throws ServletException,
 	IOException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating doGet", e);
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
+
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling","RedirectServlet",getClass().getSimpleName(), "doGet"});
 		try {

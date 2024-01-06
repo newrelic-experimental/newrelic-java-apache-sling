@@ -21,17 +21,13 @@ public abstract class DistributionQueueProcessor {
 		Map<String, Object> attrs = new HashMap<>();
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionQueueProcessor", getClass().getSimpleName(), "process"});
-		try {
 
-			Util.recordValue(attrs, "queue.name", queueName);
-			if (queueEntry !=null) {
-				Util.recordValue(attrs, "queue.id", queueEntry.getId());
-				Util.recordValue(attrs, "queue.state", queueEntry.getStatus().getItemState().name());
-			}
-
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating process", e);
+		Util.recordValue(attrs, "queue.name", queueName);
+		if (queueEntry !=null) {
+			Util.recordValue(attrs, "queue.id", queueEntry.getId());
+			Util.recordValue(attrs, "queue.state", queueEntry.getStatus().getItemState().name());
 		}
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);

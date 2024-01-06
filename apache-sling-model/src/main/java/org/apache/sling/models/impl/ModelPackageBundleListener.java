@@ -26,27 +26,22 @@ public abstract class ModelPackageBundleListener {
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "ModelPackageBundleListener", getClass().getSimpleName(), "addingBundle"});
 
-		try {
-			if (bundle != null ) {
-				Util.recordValue(attrs, "bundle.name", bundle);
-				Util.recordValue(attrs, "bundle.symbolicName", bundle.getSymbolicName());
-				Util.recordValue(attrs, "bundle.state", bundle.getState());
-				Util.recordValue(attrs, "bundle.id", bundle.getBundleId());
-			}
-			if (event != null ) {
-				Util.recordValue(attrs, "event.name", event);
-				Util.recordValue(attrs, "event.type", event.getType());
-			}
 
-			if ( attrs != null ) {
-				NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
-			}
-
+		if (bundle != null ) {
+			Util.recordValue(attrs, "bundle.name", bundle);
+			Util.recordValue(attrs, "bundle.symbolicName", bundle.getSymbolicName());
+			Util.recordValue(attrs, "bundle.state", bundle.getState());
+			Util.recordValue(attrs, "bundle.id", bundle.getBundleId());
 		}
-		catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating addingBundle", e);
-
+		if (event != null ) {
+			Util.recordValue(attrs, "event.name", event);
+			Util.recordValue(attrs, "event.type", event.getType());
 		}
+
+		if ( attrs != null ) {
+			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
+		}
+
 		return Weaver.callOriginal();
 	}
 
@@ -58,28 +53,22 @@ public abstract class ModelPackageBundleListener {
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "ModelPackageBundleListener", getClass().getSimpleName(), "removedBundle"});
 
-		try {
-			if (bundle != null ) {
-				Util.recordValue(attrs, "bundle.name", bundle);
-				Util.recordValue(attrs, "bundle.symbolicName", bundle.getSymbolicName());
-				Util.recordValue(attrs, "bundle.state", bundle.getState());
-				Util.recordValue(attrs, "bundle.id", bundle.getBundleId());
-			}
-			if (event != null ) {
-				Util.recordValue(attrs, "event.name", event);
-				Util.recordValue(attrs, "event.type", event.getType());
-			}
 
-			if ( attrs != null ) {
-				NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
-			}
-
-
+		if (bundle != null ) {
+			Util.recordValue(attrs, "bundle.name", bundle);
+			Util.recordValue(attrs, "bundle.symbolicName", bundle.getSymbolicName());
+			Util.recordValue(attrs, "bundle.state", bundle.getState());
+			Util.recordValue(attrs, "bundle.id", bundle.getBundleId());
 		}
-		catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating removedBundle", e);
-
+		if (event != null ) {
+			Util.recordValue(attrs, "event.name", event);
+			Util.recordValue(attrs, "event.type", event.getType());
 		}
+
+		if ( attrs != null ) {
+			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
+		}
+
 		Weaver.callOriginal();
 	}
 

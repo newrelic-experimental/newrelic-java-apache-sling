@@ -27,20 +27,14 @@ public abstract class AbstractJcrEventTrigger {
 		DistributionRequest result =null;
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "AbstractJcrEventTrigger", getClass().getSimpleName(), "processEvent"});
-		try {
 
-
-			if (event != null) {
-				Util.recordValue(attrs, "event.path", event.getPath());
-				Util.recordValue(attrs, "event.type", event.getType());
-
-			}
+		if (event != null) {
+			Util.recordValue(attrs, "event.path", event.getPath());
+			Util.recordValue(attrs, "event.type", event.getType());
 
 		}
-		catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating processEvent", e);
 
-		}
+
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
 		}

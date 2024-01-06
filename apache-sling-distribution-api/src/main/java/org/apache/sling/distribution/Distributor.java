@@ -22,26 +22,23 @@ public abstract class Distributor {
 		Map<String, Object> attrs = new HashMap<>();
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "Distributor", getClass().getSimpleName(), "distribute"});
-		try {
 
 
-			if (agentName != null) {
-				Util.recordValue(attrs, "distribute.AgentName", agentName);
-			}
 
-			if (resourceResolver != null) {
-				Util.recordValue(attrs, "distribute.UserID", resourceResolver.getUserID());
-			}
-
-			if (distributionRequest != null) {
-				Util.recordValue(attrs, "distribute.RequestType", distributionRequest.getRequestType());
-			}
-
+		if (agentName != null) {
+			Util.recordValue(attrs, "distribute.AgentName", agentName);
 		}
-		catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(), "error evaluating distribute", e);
 
+		if (resourceResolver != null) {
+			Util.recordValue(attrs, "distribute.UserID", resourceResolver.getUserID());
 		}
+
+		if (distributionRequest != null) {
+			Util.recordValue(attrs, "distribute.RequestType", distributionRequest.getRequestType());
+		}
+
+
+
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
 		}

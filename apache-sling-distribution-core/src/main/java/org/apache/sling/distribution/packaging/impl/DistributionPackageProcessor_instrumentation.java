@@ -22,20 +22,15 @@ public abstract class DistributionPackageProcessor_instrumentation {
 		Map<String, Object> attrs = new HashMap<>();
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionPackageProcessor", getClass().getSimpleName(), "forward"});
-		try {
-			if (distributionPackage != null ) {
-				// Modify this section based on the methods and properties of DistributionRequest
 
-				Util.recordValue(attrs, "package,name", distributionPackage);
-				Util.recordValue(attrs, "package.type", distributionPackage.getType());
-				Util.recordValue(attrs, "package.size", distributionPackage.getSize());
-			}
+		if (distributionPackage != null ) {
+			// Modify this section based on the methods and properties of DistributionRequest
 
-
-
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluting process", e);
+			Util.recordValue(attrs, "package,name", distributionPackage);
+			Util.recordValue(attrs, "package.type", distributionPackage.getType());
+			Util.recordValue(attrs, "package.size", distributionPackage.getSize());
 		}
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);

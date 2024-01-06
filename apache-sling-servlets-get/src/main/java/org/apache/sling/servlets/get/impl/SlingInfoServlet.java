@@ -19,12 +19,8 @@ public abstract class SlingInfoServlet {
 	protected void doGet(SlingHttpServletRequest request,
 			SlingHttpServletResponse response) throws IOException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating doGet", e);
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "SlingInfoServlet",getClass().getSimpleName(), "doGet"});

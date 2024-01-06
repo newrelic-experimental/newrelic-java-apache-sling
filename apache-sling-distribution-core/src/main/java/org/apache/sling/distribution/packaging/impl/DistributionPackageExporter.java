@@ -26,20 +26,17 @@ public abstract class DistributionPackageExporter {
 
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionPackageExporter", getClass().getSimpleName(), "forward"});
-		try {
-			if (distributionRequest != null && packageProcessor != null) {
-				// Modify this section based on the methods and properties of DistributionRequest
-				Util.recordValue(attrs, "request", distributionRequest); // toString.
-				Util.recordValue(attrs, "package", packageProcessor.toString());
-				Util.recordValue(attrs, "package.size", packageProcessor.getPackagesSize());
-				Util.recordValue(attrs, "package.count", packageProcessor.getPackagesCount());
-			}
 
-			Util.recordResourceResolver(attrs, resourceResolver);
-
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating exportPackages", e);
+		if (distributionRequest != null && packageProcessor != null) {
+			// Modify this section based on the methods and properties of DistributionRequest
+			Util.recordValue(attrs, "request", distributionRequest); // toString.
+			Util.recordValue(attrs, "package", packageProcessor.toString());
+			Util.recordValue(attrs, "package.size", packageProcessor.getPackagesSize());
+			Util.recordValue(attrs, "package.count", packageProcessor.getPackagesCount());
 		}
+
+		Util.recordResourceResolver(attrs, resourceResolver);
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);
@@ -63,13 +60,11 @@ public abstract class DistributionPackageExporter {
 		DistributionPackage result =null;
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom", "Sling", "DistributionPackageExporter", getClass().getSimpleName(), "forward"});
-		try {
-			Util.recordValue(attrs, "distributionPackageId", distributionPackageId); // toString.
-			Util.recordResourceResolver(attrs, resourceResolver);
 
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating getPackage", e);
-		}
+		Util.recordValue(attrs, "distributionPackageId", distributionPackageId); // toString.
+		Util.recordResourceResolver(attrs, resourceResolver);
+
+
 
 		if (attrs != null) {
 			NewRelic.getAgent().getTracedMethod().addCustomAttributes(attrs);

@@ -30,12 +30,9 @@ public abstract class InternalRequest {
 	protected void delegateExecute(SlingHttpServletRequest request, SlingHttpServletResponse response, ResourceResolver resourceResolver)
 			throws ServletException, IOException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating delegateExecute", e);
+
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "InternalRequest",getClass().getSimpleName(), "delegateExecute"});

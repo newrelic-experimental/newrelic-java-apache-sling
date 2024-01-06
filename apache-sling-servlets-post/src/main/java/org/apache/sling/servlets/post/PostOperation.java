@@ -19,13 +19,10 @@ public abstract class PostOperation {
 	public void run(SlingHttpServletRequest request, PostResponse response,
 			SlingPostProcessor[] processors) throws PreconditionViolatedPersistenceException, TemporaryPersistenceException, PersistenceException {
 
-		try {
-			if (request != null) {
-				Util.recordRequestAttributes(request);
-			}
-		} catch (Exception e) {
-			Util.handleException(getClass().getSimpleName(),"error evaluating run", e);
+		if (request != null) {
+			Util.recordRequestAttributes(request);
 		}
+
 
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[]{"Custom", "Sling", "PostOperation", getClass().getSimpleName(), "run"});
 		try {
