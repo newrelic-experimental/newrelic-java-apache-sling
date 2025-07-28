@@ -31,7 +31,7 @@ jar {
 }
 
 verifyInstrumentation {
-  passes("org.apache.sling:org.apache.sling.engine:[2.27.2,)") {
+  passes("org.apache.sling:org.apache.sling.engine:[2.27.2,3.0.0)") {
         compile 'org.apache.sling:org.apache.sling.engine:2.15.6'
     }
 }
