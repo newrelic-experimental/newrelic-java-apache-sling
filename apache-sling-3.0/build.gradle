@@ -1,0 +1,45 @@
+
+// Build.gradle generated for instrumentation module apache-sling
+
+apply plugin: 'java'
+
+dependencies {
+   // Declare a dependency on each JAR you want to instrument
+   // Example:
+   // implementation 'javax.servlet:servlet-api:2.5'
+
+   // New Relic Java Agent dependencies
+ 
+   implementation  'org.apache.sling:org.apache.sling.api:3.0.0'
+   implementation  'org.apache.sling:org.apache.sling.engine:3.0.0'
+   implementation  'jakarta.servlet:jakarta.servlet-api:6.0.0'
+  
+  
+   
+   
+   implementation 'com.newrelic.agent.java:newrelic-agent:6.4.0'
+   implementation 'com.newrelic.agent.java:newrelic-api:6.4.0'
+   implementation fileTree(include: ['*.jar'], dir: '../libs')
+   implementation fileTree(include: ['*.jar'], dir: '../test-lib')
+}
+
+jar {
+  manifest {
+    attributes 'Implementation-Title': 'com.newrelic.instrumentation.labs.apache-sling'
+    attributes 'Implementation-Vendor': 'New Relic Labs'
+    attributes 'Implementation-Vendor-Id': 'com.newrelic.labs'
+    attributes 'Implementation-Version': 1.1
+  }
+}
+
+verifyInstrumentation {
+    passes("org.apache.sling:org.apache.sling.engine:[3.0.0,)") {
+        compile 'org.apache.sling:org.apache.sling.api:3.0.0'
+        compile 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    }
+    
+  
+}
+
+ 
