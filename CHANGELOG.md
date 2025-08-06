@@ -1,3 +1,6 @@
+## Version: [v1.1.2](https://github.com/newrelic-experimental/newrelic-java-apache-sling/releases/tag/v1.1.2) | Created: 2025-08-06
+
+
 ## Version: [v1.1.1](https://github.com/newrelic-experimental/newrelic-java-apache-sling/releases/tag/v1.1.1) | Created: 2024-03-12
 
 
