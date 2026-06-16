@@ -1,4 +1,4 @@
-rootProject.name = 'java-instrumentation-template'
+rootProject.name = 'apache-sling-instrumentation'
 include 'apache-sling'
 include 'apache-sling-3.0'
 include 'apache-sling-api'

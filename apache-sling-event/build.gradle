@@ -24,7 +24,7 @@ jar {
 
 verifyInstrumentation {
     passesOnly("org.apache.sling:org.apache.sling.event:[3.6.0,4.4.0)") {
-        compile("org.apache.sling:org.apache.sling.event.api:1.0.4")
+        implementation("org.apache.sling:org.apache.sling.event.api:1.0.4")
 
     }
 }
